@@ -5,7 +5,7 @@
 	"mixins": [
 		"accessor.AbstractContainerMenuAccessor",
 		"block_place_sync.ServerPlayerGameModeMixin",
-		"sneak_sync.ChunkMap$TrackedEntityMixin"
+		"pose_sync.ChunkMap$TrackedEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

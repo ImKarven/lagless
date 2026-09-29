@@ -1,11 +1,10 @@
-package me.karven.mixin.sneak_sync;
+package me.karven.mixin.pose_sync;
 
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ChunkMap;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.Pose;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,11 +33,7 @@ public class ChunkMap$TrackedEntityMixin {
         if (!(this.entity instanceof ServerPlayer player)) return;
         if (id != player.getId()) return;
         final List<SynchedEntityData.DataValue<?>> copy = new LinkedList<>(packedItems);
-        copy.removeIf(dataValue ->
-                dataValue.id() == POSE_INDEX &&
-                        dataValue.value() instanceof Pose pose &&
-                        pose == Pose.CROUCHING
-                );
+        copy.removeIf(dataValue -> dataValue.id() == POSE_INDEX);
         arguments.set(0, new ClientboundSetEntityDataPacket(id, copy));
     }
 }
