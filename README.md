@@ -9,6 +9,9 @@ Currently, Lagless can be installed as a mod for Fabric servers. Plugin versions
 > [!WARNING]
 > Lagless is still in alpha/experimental state. It is nice if you use the mod/plugin and check out its feature. However, it is also important to note that Lagless can cause visual bugs or desynchronizations. Please report those bugs if you found any, your findings are greatly appreciated ❤️
 
+## Supported Versions
+Lagless only supports Minecraft version 26.3 and above. There will not be any back-ports to older versions.
+
 ## Building
 Lagless uses Gradle as its build system.
 
