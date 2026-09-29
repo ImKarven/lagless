@@ -5,13 +5,12 @@
 	"name": "Lagless",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
-		"Me!"
+		"Karven"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"email": "karven@atomicmail.io"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/lagless/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -29,6 +28,7 @@
 			"environment": "client"
 		}
 	],
+	"accessWidener": "lagless.classtweaker",
 	"depends": {
 		"fabricloader": ">=0.19.5",
 		"minecraft": "~26.3",

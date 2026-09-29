@@ -2,7 +2,6 @@ package me.karven.mixin.block_place_sync;
 
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
-import me.karven.Lagless;
 import me.karven.mixin.accessor.AbstractContainerMenuAccessor;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerPlayerGameMode;

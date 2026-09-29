@@ -14,6 +14,8 @@ repositories {
 loom {
 	splitEnvironmentSourceSets()
 
+	accessWidenerPath = file("src/main/resources/lagless.classtweaker")
+
 	mods {
 		register("lagless") {
 			sourceSet(sourceSets.main.get())
