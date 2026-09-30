@@ -1,4 +1,4 @@
-package me.karven.mixin.pose_sync;
+package me.karven.mixin.pose;
 
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -26,7 +26,7 @@ public class ChunkMap$TrackedEntityMixin {
             method = "sendToTrackingPlayersAndSelf",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;send(Lnet/minecraft/network/protocol/Packet;)V")
     )
-    private void sneak_sync$checkBeforeSendToSelf(final Args arguments) {
+    private void lagless$pose$checkBeforeSendToSelf(final Args arguments) {
         final int POSE_INDEX = 6;
 
         if (!(arguments.get(0) instanceof ClientboundSetEntityDataPacket(int id, List<SynchedEntityData.DataValue<?>> packedItems))) return;

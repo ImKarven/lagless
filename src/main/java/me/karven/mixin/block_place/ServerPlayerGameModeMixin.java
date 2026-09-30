@@ -1,4 +1,4 @@
-package me.karven.mixin.block_place_sync;
+package me.karven.mixin.block_place;
 
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ServerPlayerGameModeMixin {
 
     @Inject(method = "useItemOn", at = @At("HEAD"))
-    private void block_place_sync$setSnapshot(
+    private void lagless$block_place$setSnapshot(
             final ServerPlayer player,
             final Level level,
             final ItemStack itemStack,
@@ -37,7 +37,7 @@ public abstract class ServerPlayerGameModeMixin {
     }
 
     @Inject(method = "useItemOn", at = @At("RETURN"))
-    private void block_place_sync$syncRemote(
+    private void lagless$block_place$syncRemote(
             final ServerPlayer player,
             final Level level,
             final ItemStack itemStack,
