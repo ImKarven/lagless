@@ -32,12 +32,12 @@ cd lagless/
 
 For Linux/MacOS:
 ```sh
-./gradlew jar
+./gradlew build
 ```
 
 For Windows:
 ```batch
-gradlew.bat jar
+gradlew.bat build
 ```
 
 3. Obtain the jar file
