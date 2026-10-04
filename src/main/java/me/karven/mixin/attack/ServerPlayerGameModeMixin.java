@@ -21,6 +21,11 @@ public class ServerPlayerGameModeMixin {
     @Final
     protected ServerPlayer player;
 
+    @Inject(method = "abortDestroyBlock", at = @At(value = "HEAD"))
+    private void lagless$attack$abortDestroyBlock(final CallbackInfo ci) {
+        ATTACK_MODULE.setPunchState(this.player, AttackModule.PunchState.NONE);
+    }
+
     @Inject(method = "destroyAndAck", at = @At(value = "HEAD"))
     private void lagless$attack$destroyBlock(final BlockPos pos, final int sequence, final String exitId, final CallbackInfo ci) {
         switch (exitId) {
