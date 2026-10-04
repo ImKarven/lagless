@@ -4,8 +4,10 @@
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
 		"accessor.AbstractContainerMenuAccessor",
-		"block_place.ServerPlayerGameModeMixin",
-		"pose.ChunkMap$TrackedEntityMixin"
+		"item_count.ServerPlayerGameModeMixin",
+		"pose.ChunkMap$TrackedEntityMixin",
+		"attack.ServerGamePacketListenerImplMixin",
+		"attack.ServerPlayerGameModeMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
