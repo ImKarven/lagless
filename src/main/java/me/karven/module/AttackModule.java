@@ -19,6 +19,10 @@ import java.util.concurrent.ConcurrentSkipListSet;
 public class AttackModule extends Module {
     private final ConcurrentHashMap<UUID, PunchState> playersPunchState = new ConcurrentHashMap<>();
 
+    protected AttackModule() {
+        super(false);
+    }
+
     public void setPunchState(final Player player, final PunchState state) {
         playersPunchState.put(player.getUUID(), state);
     }

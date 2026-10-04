@@ -1,5 +1,6 @@
 package me.karven.mixin.pose;
 
+import me.karven.module.Modules;
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ChunkMap;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Mixin(ChunkMap.TrackedEntity.class)
 public class ChunkMap$TrackedEntityMixin {
+    private static final int POSE_INDEX = 6;
 
     @Shadow
     @Final
@@ -28,7 +30,7 @@ public class ChunkMap$TrackedEntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;send(Lnet/minecraft/network/protocol/Packet;)V")
     )
     private void lagless$pose$checkBeforeSendToSelf(final Args arguments) {
-        final int POSE_INDEX = 6;
+        if (!Modules.POSE.isEnabled()) return;
 
         if (!(arguments.get(0) instanceof ClientboundSetEntityDataPacket(int id, List<SynchedEntityData.DataValue<?>> packedItems))) return;
         if (!(this.entity instanceof ServerPlayer player)) return;
