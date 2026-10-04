@@ -1,9 +1,9 @@
 > [!NOTE]
 > The documentation is written for 26.3. Older or newer versions may behave differently, especially for the introduction of `ServerboundPunchPacket` in 26.3 with many changes to how hand swings work.
 
-# Faster Crystal
+# Attack
 
-This file explains the logic around the "Faster Crystal" module of Lagless.
+This file explains the logic around the "Attack" module of Lagless.
 
 ## Problem
 
