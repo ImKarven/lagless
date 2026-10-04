@@ -43,13 +43,14 @@ public abstract class ServerGamePacketListenerImplMixin {
     // Inject at the start (after ensuring running on same thread) to keep vanilla behavior: attack packet is sent first, punch packet after.
     @Inject(method = "handlePunch", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;resetLastActionTime()V"))
     private void lagless$attack$punchPacket(final CallbackInfo ci) {
+        if (!ATTACK_MODULE.isEnabled()) return;
         final AttackModule.PunchState punchState = ATTACK_MODULE.getPunchState(this.player);
         if (ONE_PUNCH_PACKET_STATES.contains(punchState)) {
             ATTACK_MODULE.setPunchState(this.player, AttackModule.PunchState.NONE);
             return;
         }
 
-        // TODO: proper breaking block check
+        // TODO: bug: the client can continue breaking block even after abort
         if (punchState == AttackModule.PunchState.DESTROYING_BLOCK) {
             return;
         }
@@ -62,10 +63,5 @@ public abstract class ServerGamePacketListenerImplMixin {
     @Inject(method = "handleAttack", at = @At(value = "HEAD"))
     private void lagless$attack$attackPacket(final ServerboundAttackPacket packet, final CallbackInfo ci) {
         ATTACK_MODULE.setPunchState(this.player, AttackModule.PunchState.ATTACK);
-    }
-
-    @Inject(method = "handlePlayerAction", at = @At(value = "RETURN"))
-    private void lagless$attack$playerActionPacket(final ServerboundPlayerActionPacket packet, final CallbackInfo ci) {
-        this.player.sendSystemMessage(Component.literal(packet.getAction().name()));
     }
 }

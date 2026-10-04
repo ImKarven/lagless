@@ -31,16 +31,6 @@ public class AttackModule extends Module {
         return playersPunchState.get(player.getUUID());
     }
 
-    @Override
-    public void enable() {
-        // TODO:
-    }
-
-    @Override
-    public void disable() {
-        // TODO:
-    }
-
     public @Nullable Entity rayTraceEntity(final ServerPlayer player) {
         if (player.gameMode() == GameType.SPECTATOR) return null;
         final Vec3 startPosition = player.getEyePosition();
