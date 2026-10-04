@@ -30,7 +30,7 @@ public class ServerPlayerGameModeMixin {
     private void lagless$attack$destroyBlock(final BlockPos pos, final int sequence, final String exitId, final CallbackInfo ci) {
         switch (exitId) {
             case "creative destroy", "insta mine" -> ATTACK_MODULE.setPunchState(player, AttackModule.PunchState.INSTANT_BREAK);
-            case "destroyed" -> ATTACK_MODULE.setPunchState(player, AttackModule.PunchState.NONE);
+            default -> ATTACK_MODULE.setPunchState(player, AttackModule.PunchState.NONE);
         }
     }
 }
