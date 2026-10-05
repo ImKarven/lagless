@@ -72,6 +72,7 @@ public class AttackModule extends Module {
         /**
          * Player sends a {@code ServerboundPlayerActionPacket} to start breaking a block and sends {@code ServerboundPunchPacket} every tick until the block is broken or the player aborts destroying the block.
          */
+        START_DESTROY_BLOCK,
         DESTROYING_BLOCK
     }
 }

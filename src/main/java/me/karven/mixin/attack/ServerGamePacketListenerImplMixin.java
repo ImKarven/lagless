@@ -28,15 +28,19 @@ public abstract class ServerGamePacketListenerImplMixin {
         if (!Modules.ATTACK.isEnabled()) return;
         final AttackModule.PunchState punchState = ((HasPunchState) this.player).lagless$attack$getPunchState();
 
-        // We shouldn't attack if the player broke a block with one punch
-        if (punchState == AttackModule.PunchState.ATTACK || punchState == AttackModule.PunchState.INSTANT_BREAK) {
-            ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.NONE);
-            return;
-        }
+        switch (punchState) {
+            case ATTACK, INSTANT_BREAK -> {
+                // We shouldn't attack if the player broke a block with one punch
+                ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.NONE);
+                return;
+            }
 
-        // TODO: bug: the client can continue breaking block even after abort
-        if (punchState == AttackModule.PunchState.DESTROYING_BLOCK) {
-            return;
+            // TODO: bug: the client can continue breaking block even after abort
+            case DESTROYING_BLOCK -> {
+                return;
+            }
+
+            case START_DESTROY_BLOCK -> ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.DESTROYING_BLOCK);
         }
 
         final Entity entity = Modules.ATTACK.rayTraceEntity(this.player);

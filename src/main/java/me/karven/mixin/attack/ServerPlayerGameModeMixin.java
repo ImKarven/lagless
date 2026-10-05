@@ -31,7 +31,7 @@ public class ServerPlayerGameModeMixin {
             final CallbackInfo ci
     ) {
         if (action != ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK) return;
-        ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.DESTROYING_BLOCK);
+        ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.START_DESTROY_BLOCK);
     }
 
     @Inject(method = "abortDestroyBlock", at = @At(value = "HEAD"))
