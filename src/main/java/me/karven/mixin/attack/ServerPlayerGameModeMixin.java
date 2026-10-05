@@ -1,7 +1,6 @@
 package me.karven.mixin.attack;
 
-import me.karven.module.AttackModule;
-import me.karven.module.Modules;
+import me.karven.module.attack.AttackModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
@@ -17,8 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ServerPlayerGameMode.class)
 public class ServerPlayerGameModeMixin {
 
-    private final AttackModule ATTACK_MODULE = Modules.ATTACK;
-
     @Shadow
     @Final
     protected ServerPlayer player;
@@ -33,19 +30,19 @@ public class ServerPlayerGameModeMixin {
             final CallbackInfo ci
     ) {
         if (action != ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK) return;
-        ATTACK_MODULE.setPunchState(this.player, AttackModule.PunchState.DESTROYING_BLOCK);
+        this.player.lagless$attack$setPunchState(AttackModule.PunchState.DESTROYING_BLOCK);
     }
 
     @Inject(method = "abortDestroyBlock", at = @At(value = "HEAD"))
     private void lagless$attack$abortDestroyBlock(final CallbackInfo ci) {
-        ATTACK_MODULE.setPunchState(this.player, AttackModule.PunchState.NONE);
+        this.player.lagless$attack$setPunchState(AttackModule.PunchState.NONE);
     }
 
     @Inject(method = "destroyAndAck", at = @At(value = "HEAD"))
     private void lagless$attack$destroyBlock(final BlockPos pos, final int sequence, final String exitId, final CallbackInfo ci) {
         switch (exitId) {
-            case "creative destroy", "insta mine" -> ATTACK_MODULE.setPunchState(player, AttackModule.PunchState.INSTANT_BREAK);
-            default -> ATTACK_MODULE.setPunchState(player, AttackModule.PunchState.NONE);
+            case "creative destroy", "insta mine" -> this.player.lagless$attack$setPunchState(AttackModule.PunchState.INSTANT_BREAK);
+            default -> this.player.lagless$attack$setPunchState(AttackModule.PunchState.NONE);
         }
     }
 }

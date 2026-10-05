@@ -1,11 +1,8 @@
 package me.karven.mixin.attack;
 
-import me.karven.Lagless;
-import me.karven.module.AttackModule;
 import me.karven.module.Modules;
-import net.minecraft.network.chat.Component;
+import me.karven.module.attack.AttackModule;
 import net.minecraft.network.protocol.game.ServerboundAttackPacket;
-import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.entity.Entity;
@@ -17,18 +14,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
 @Mixin(ServerGamePacketListenerImpl.class)
 public abstract class ServerGamePacketListenerImplMixin {
-
-    private final AttackModule ATTACK_MODULE = Modules.ATTACK;
-    private final EnumSet<AttackModule.PunchState> ONE_PUNCH_PACKET_STATES = EnumSet.of(
-            AttackModule.PunchState.ATTACK,
-            AttackModule.PunchState.INSTANT_BREAK
-    );
 
     @Shadow
     public ServerPlayer player;
@@ -43,10 +30,12 @@ public abstract class ServerGamePacketListenerImplMixin {
     // Inject at the start (after ensuring running on same thread) to keep vanilla behavior: attack packet is sent first, punch packet after.
     @Inject(method = "handlePunch", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;resetLastActionTime()V"))
     private void lagless$attack$punchPacket(final CallbackInfo ci) {
-        if (!ATTACK_MODULE.isEnabled()) return;
-        final AttackModule.PunchState punchState = ATTACK_MODULE.getPunchState(this.player);
-        if (ONE_PUNCH_PACKET_STATES.contains(punchState)) {
-            ATTACK_MODULE.setPunchState(this.player, AttackModule.PunchState.NONE);
+        if (!Modules.ATTACK.isEnabled()) return;
+        final AttackModule.PunchState punchState = this.player.lagless$attack$getPunchState();
+
+        // We shouldn't attack if the player broke a block with one punch
+        if (punchState == AttackModule.PunchState.ATTACK || punchState == AttackModule.PunchState.INSTANT_BREAK) {
+            this.player.lagless$attack$setPunchState(AttackModule.PunchState.NONE);
             return;
         }
 
@@ -55,13 +44,15 @@ public abstract class ServerGamePacketListenerImplMixin {
             return;
         }
 
-        final Entity entity = ATTACK_MODULE.rayTraceEntity(this.player);
+        final Entity entity = Modules.ATTACK.rayTraceEntity(this.player);
         if (entity == null) return;
+
+        // Attack the entity
         this.handleAttack(new ServerboundAttackPacket(entity.getId()));
     }
 
     @Inject(method = "handleAttack", at = @At(value = "HEAD"))
     private void lagless$attack$attackPacket(final ServerboundAttackPacket packet, final CallbackInfo ci) {
-        ATTACK_MODULE.setPunchState(this.player, AttackModule.PunchState.ATTACK);
+        this.player.lagless$attack$setPunchState(AttackModule.PunchState.ATTACK);
     }
 }

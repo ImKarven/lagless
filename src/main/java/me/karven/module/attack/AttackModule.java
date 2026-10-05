@@ -1,9 +1,9 @@
-package me.karven.module;
+package me.karven.module.attack;
 
+import me.karven.module.Module;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameType;
@@ -11,24 +11,9 @@ import net.minecraft.world.phys.*;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
-
 public class AttackModule extends Module {
-    private final ConcurrentHashMap<UUID, PunchState> playersPunchState = new ConcurrentHashMap<>();
-
-    protected AttackModule() {
+    public AttackModule() {
         super(false);
-    }
-
-    public void setPunchState(final Player player, final PunchState state) {
-        playersPunchState.put(player.getUUID(), state);
-    }
-
-    public PunchState getPunchState(final Player player) {
-        return playersPunchState.get(player.getUUID());
     }
 
     public @Nullable Entity rayTraceEntity(final ServerPlayer player) {

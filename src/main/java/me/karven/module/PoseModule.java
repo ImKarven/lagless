@@ -1,7 +1,7 @@
 package me.karven.module;
 
 public class PoseModule extends Module {
-    protected PoseModule() {
+    public PoseModule() {
         super(true);
     }
 }
