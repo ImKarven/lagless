@@ -10,6 +10,7 @@ import net.minecraft.world.entity.Pose;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Mixin(ChunkMap.TrackedEntity.class)
 public class ChunkMap$TrackedEntityMixin {
+    @Unique
     private static final int POSE_INDEX = 6;
 
     @Shadow

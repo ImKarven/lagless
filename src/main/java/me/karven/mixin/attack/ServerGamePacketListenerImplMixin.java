@@ -7,8 +7,6 @@ import net.minecraft.network.protocol.game.ServerboundAttackPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.entity.Entity;
-import org.slf4j.Logger;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,10 +18,6 @@ public abstract class ServerGamePacketListenerImplMixin {
 
     @Shadow
     public ServerPlayer player;
-
-    @Shadow
-    @Final
-    private static Logger LOGGER;
 
     @Shadow
     public abstract void handleAttack(ServerboundAttackPacket packet);
