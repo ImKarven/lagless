@@ -1,7 +1,6 @@
 package me.karven.module.attack;
 
 import me.karven.module.Module;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -13,7 +12,7 @@ import org.jspecify.annotations.Nullable;
 
 public class AttackModule extends Module {
     public AttackModule() {
-        super(false);
+        super(true);
     }
 
     public @Nullable Entity rayTraceEntity(final ServerPlayer player) {
@@ -50,10 +49,6 @@ public class AttackModule extends Module {
                 entity -> entity.isPickable() && !entity.isSpectator(),
                 maxDistance * maxDistance
         );
-        player.sendOverlayMessage(Component.literal(
-                "Block Distance: " + maxDistance +
-                        " Entity Distance: " + (entityHitResult == null ? "None" : entityHitResult.getLocation().distanceTo(startPosition))
-        ));
 
         return entityHitResult == null ? null : entityHitResult.getEntity();
     }
