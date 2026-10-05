@@ -3,6 +3,8 @@ package me.karven.mixin.attack;
 import me.karven.module.AttackModule;
 import me.karven.module.Modules;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerPlayerGameMode;
 import org.spongepowered.asm.mixin.Final;
@@ -20,6 +22,19 @@ public class ServerPlayerGameModeMixin {
     @Shadow
     @Final
     protected ServerPlayer player;
+
+    @Inject(method = "handleBlockBreakAction", at = @At(value = "HEAD"))
+    private void lagless$attack$startDestroyBlock(
+            final BlockPos pos,
+            final ServerboundPlayerActionPacket.Action action,
+            final Direction direction,
+            final int maxY,
+            final int sequence,
+            final CallbackInfo ci
+    ) {
+        if (action != ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK) return;
+        ATTACK_MODULE.setPunchState(this.player, AttackModule.PunchState.DESTROYING_BLOCK);
+    }
 
     @Inject(method = "abortDestroyBlock", at = @At(value = "HEAD"))
     private void lagless$attack$abortDestroyBlock(final CallbackInfo ci) {
