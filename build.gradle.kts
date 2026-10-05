@@ -60,8 +60,9 @@ tasks.jar {
 	val projectName = project.name
 	inputs.property("projectName", projectName)
 
-	from("LICENSE") {
-		rename { "${it}_$projectName" }
+	from("LICENSE.md")
+	from("licenses/MIT") {
+		into("licenses")
 	}
 }
 
