@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ServerPlayerGameModeMixin {
 
     @Inject(method = "useItemOn", at = @At("HEAD"))
-    private void lagless$item_count$setSnapshot(
+    private void setItemSnapshot(
             final ServerPlayer player,
             final Level level,
             final ItemStack itemStack,
@@ -38,7 +38,7 @@ public abstract class ServerPlayerGameModeMixin {
     }
 
     @Inject(method = "useItemOn", at = @At("RETURN"))
-    private void lagless$item_count$syncRemote(
+    private void checkThenSyncRemote(
             final ServerPlayer player,
             final Level level,
             final ItemStack itemStack,

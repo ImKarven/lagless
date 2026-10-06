@@ -9,13 +9,13 @@ import org.spongepowered.asm.mixin.Unique;
 @Mixin(ServerPlayer.class)
 public class ServerPlayerMixin implements HasPunchState {
     @Unique
-    private AttackModule.PunchState lagless$attack$punchState = AttackModule.PunchState.NONE;
+    private AttackModule.PunchState punchState$lagless = AttackModule.PunchState.NONE;
 
-    public AttackModule.PunchState lagless$attack$getPunchState() {
-        return this.lagless$attack$punchState;
+    public AttackModule.PunchState getPunchState$lagless() {
+        return this.punchState$lagless;
     }
 
-    public void lagless$attack$setPunchState(final AttackModule.PunchState punchState) {
-        this.lagless$attack$punchState = punchState;
+    public void setPunchState$lagless(final AttackModule.PunchState punchState) {
+        this.punchState$lagless = punchState;
     }
 }

@@ -31,7 +31,7 @@ public class ChunkMap$TrackedEntityMixin {
             method = "sendToTrackingPlayersAndSelf",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;send(Lnet/minecraft/network/protocol/Packet;)V")
     )
-    private void lagless$pose$checkBeforeSendToSelf(final Args arguments) {
+    private void removePoseBeforeSendingEntityDataToSelf(final Args arguments) {
         if (!Modules.POSE.isEnabled()) return;
 
         if (!(arguments.get(0) instanceof ClientboundSetEntityDataPacket(int id, List<SynchedEntityData.DataValue<?>> packedItems))) return;
@@ -41,6 +41,7 @@ public class ChunkMap$TrackedEntityMixin {
         copy.removeIf(dataValue ->
                         dataValue.id() == POSE_INDEX &&
                                 dataValue.value() instanceof Pose pose &&
+                                // Only remove STANDING and CROUCHING to avoid changing vanilla behavior
                                 (pose == Pose.STANDING || pose == Pose.CROUCHING)
                 );
         arguments.set(0, new ClientboundSetEntityDataPacket(id, copy));

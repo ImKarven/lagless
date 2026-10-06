@@ -24,14 +24,14 @@ public abstract class ServerGamePacketListenerImplMixin {
 
     // Inject at the start (after ensuring running on same thread) to keep vanilla behavior: attack packet is sent first, punch packet after.
     @Inject(method = "handlePunch", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;resetLastActionTime()V"))
-    private void lagless$attack$punchPacket(final CallbackInfo ci) {
+    private void punchPacket(final CallbackInfo ci) {
         if (!Modules.ATTACK.isEnabled()) return;
-        final AttackModule.PunchState punchState = ((HasPunchState) this.player).lagless$attack$getPunchState();
+        final AttackModule.PunchState punchState = ((HasPunchState) this.player).getPunchState$lagless();
 
         switch (punchState) {
             case ATTACK, INSTANT_BREAK -> {
                 // We shouldn't attack if the player broke a block with one punch
-                ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.NONE);
+                ((HasPunchState) this.player).setPunchState$lagless(AttackModule.PunchState.NONE);
                 return;
             }
 
@@ -40,7 +40,7 @@ public abstract class ServerGamePacketListenerImplMixin {
                 return;
             }
 
-            case START_DESTROY_BLOCK -> ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.DESTROYING_BLOCK);
+            case START_DESTROY_BLOCK -> ((HasPunchState) this.player).setPunchState$lagless(AttackModule.PunchState.DESTROYING_BLOCK);
         }
 
         final Entity entity = Modules.ATTACK.rayTraceEntity(this.player);
@@ -51,7 +51,7 @@ public abstract class ServerGamePacketListenerImplMixin {
     }
 
     @Inject(method = "handleAttack", at = @At(value = "HEAD"))
-    private void lagless$attack$attackPacket(final ServerboundAttackPacket packet, final CallbackInfo ci) {
-        ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.ATTACK);
+    private void attackPacket(final ServerboundAttackPacket packet, final CallbackInfo ci) {
+        ((HasPunchState) this.player).setPunchState$lagless(AttackModule.PunchState.ATTACK);
     }
 }

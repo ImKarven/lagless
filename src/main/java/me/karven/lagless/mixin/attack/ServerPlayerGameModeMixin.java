@@ -22,7 +22,7 @@ public class ServerPlayerGameModeMixin {
     protected ServerPlayer player;
 
     @Inject(method = "handleBlockBreakAction", at = @At(value = "HEAD"))
-    private void lagless$attack$startDestroyBlock(
+    private void startBreakingBlock(
             final BlockPos pos,
             final ServerboundPlayerActionPacket.Action action,
             final Direction direction,
@@ -31,19 +31,19 @@ public class ServerPlayerGameModeMixin {
             final CallbackInfo ci
     ) {
         if (action != ServerboundPlayerActionPacket.Action.START_DESTROY_BLOCK) return;
-        ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.START_DESTROY_BLOCK);
+        ((HasPunchState) this.player).setPunchState$lagless(AttackModule.PunchState.START_DESTROY_BLOCK);
     }
 
     @Inject(method = "abortDestroyBlock", at = @At(value = "HEAD"))
-    private void lagless$attack$abortDestroyBlock(final CallbackInfo ci) {
-        ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.NONE);
+    private void abortBreakingBlock(final CallbackInfo ci) {
+        ((HasPunchState) this.player).setPunchState$lagless(AttackModule.PunchState.NONE);
     }
 
     @Inject(method = "destroyAndAck", at = @At(value = "HEAD"))
-    private void lagless$attack$destroyBlock(final BlockPos pos, final int sequence, final String exitId, final CallbackInfo ci) {
+    private void breakBlock(final BlockPos pos, final int sequence, final String exitId, final CallbackInfo ci) {
         switch (exitId) {
-            case "creative destroy", "insta mine" -> ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.INSTANT_BREAK);
-            default -> ((HasPunchState) this.player).lagless$attack$setPunchState(AttackModule.PunchState.NONE);
+            case "creative destroy", "insta mine" -> ((HasPunchState) this.player).setPunchState$lagless(AttackModule.PunchState.INSTANT_BREAK);
+            default -> ((HasPunchState) this.player).setPunchState$lagless(AttackModule.PunchState.NONE);
         }
     }
 }
