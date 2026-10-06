@@ -1,6 +1,6 @@
-package me.karven.module.attack;
+package me.karven.lagless.module.attack;
 
-import me.karven.module.Module;
+import me.karven.lagless.module.Module;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -12,7 +12,7 @@ import org.jspecify.annotations.Nullable;
 
 public class AttackModule extends Module {
     public AttackModule() {
-        super(true);
+        super(true, "attack");
     }
 
     public @Nullable Entity rayTraceEntity(final ServerPlayer player) {

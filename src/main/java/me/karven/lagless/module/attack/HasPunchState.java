@@ -1,4 +1,4 @@
-package me.karven.module.attack;
+package me.karven.lagless.module.attack;
 
 public interface HasPunchState {
 

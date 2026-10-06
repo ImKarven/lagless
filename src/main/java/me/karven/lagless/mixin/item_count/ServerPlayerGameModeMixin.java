@@ -1,9 +1,9 @@
-package me.karven.mixin.item_count;
+package me.karven.lagless.mixin.item_count;
 
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
-import me.karven.mixin.accessor.AbstractContainerMenuAccessor;
-import me.karven.module.Modules;
+import me.karven.lagless.mixin.accessor.AbstractContainerMenuAccessor;
+import me.karven.lagless.module.Modules;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerPlayerGameMode;
 import net.minecraft.world.InteractionHand;

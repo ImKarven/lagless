@@ -1,8 +1,8 @@
-package me.karven.module;
+package me.karven.lagless.module;
 
 public class ItemCountModule extends Module {
 
     public ItemCountModule() {
-        super(true);
+        super(true, "item_count");
     }
 }

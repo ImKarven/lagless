@@ -1,6 +1,6 @@
-package me.karven.mixin.pose;
+package me.karven.lagless.mixin.pose;
 
-import me.karven.module.Modules;
+import me.karven.lagless.module.Modules;
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ChunkMap;

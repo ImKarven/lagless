@@ -19,7 +19,6 @@ loom {
 	mods {
 		register("lagless") {
 			sourceSet(sourceSets.main.get())
-			sourceSet(sourceSets.getByName("client"))
 		}
 	}
 }
@@ -31,6 +30,8 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
+
+	implementation("org.spongepowered:configurate-yaml:4.2.0")
 }
 
 tasks.processResources {

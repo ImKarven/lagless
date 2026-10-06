@@ -15,7 +15,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"me.karven.Lagless"
+			"me.karven.lagless.Lagless"
 		]
 	},
 	"mixins": [

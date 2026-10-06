@@ -1,7 +1,7 @@
-package me.karven.mixin.attack;
+package me.karven.lagless.mixin.attack;
 
-import me.karven.module.attack.AttackModule;
-import me.karven.module.attack.HasPunchState;
+import me.karven.lagless.module.attack.AttackModule;
+import me.karven.lagless.module.attack.HasPunchState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;

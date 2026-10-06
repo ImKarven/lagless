@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "me.karven.mixin",
+	"package": "me.karven.lagless.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
 		"accessor.AbstractContainerMenuAccessor",

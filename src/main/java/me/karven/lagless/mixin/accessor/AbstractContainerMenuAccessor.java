@@ -1,4 +1,4 @@
-package me.karven.mixin.accessor;
+package me.karven.lagless.mixin.accessor;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.inventory.AbstractContainerMenu;
