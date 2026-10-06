@@ -30,7 +30,7 @@
 	},
 	"custom": {
 		"loom:injected_interfaces": {
-			"net/minecraft/server/level/ServerPlayer": ["me/karven/module/attack/HasPunchState"]
+			"net/minecraft/server/level/ServerPlayer": ["me/karven/lagless/module/attack/HasPunchState"]
 		}
 	}
 }
