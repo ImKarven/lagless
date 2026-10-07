@@ -9,7 +9,7 @@ This file explains the logic around the "Attack" module of Lagless.
 
 Take Crystal PvP gamemode for example. In this gamemode, players constantly place and destroy end crystals.
 
-Assume the latency of the player is `x` ms, we have the following sequence:
+Assuming the delay of the connection from the player to the server and from the server to the player is `x` ms, we have the following sequence:
 
 - Player holds end crystals in their main hand and sends `ServerboundUseItemOnPacket` to attempt placing an end crystal
 - The packet travels in `x` ms
