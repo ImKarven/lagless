@@ -73,14 +73,15 @@ tasks.jar {
 	inputs.property("projectName", projectName)
 
 	from("LICENSE.md")
-	files("licenses").forEach { it ->
+	rootDir.resolve("licenses").listFiles()?.forEach { it ->
 		from("licenses/" + it.name) {
-			into("licenses")
+			into("licenses/")
 		}
 	}
 
 	from("assets/logo.png") {
-		into("assets/lagless")
+		into("assets/lagless/")
+		rename { "icon.png" }
 	}
 }
 
