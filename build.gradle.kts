@@ -73,8 +73,10 @@ tasks.jar {
 	inputs.property("projectName", projectName)
 
 	from("LICENSE.md")
-	from("licenses/MIT") {
-		into("licenses")
+	files("licenses").forEach { it ->
+		from("licenses/" + it.name) {
+			into("licenses")
+		}
 	}
 
 	from("assets/logo.png") {
