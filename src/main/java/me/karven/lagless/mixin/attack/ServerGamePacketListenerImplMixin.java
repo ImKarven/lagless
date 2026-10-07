@@ -1,5 +1,7 @@
 package me.karven.lagless.mixin.attack;
 
+import me.karven.lagless.Lagless;
+import me.karven.lagless.config.RootConfiguration;
 import me.karven.lagless.module.Modules;
 import me.karven.lagless.module.attack.AttackModule;
 import me.karven.lagless.module.attack.HasPunchState;
@@ -25,7 +27,8 @@ public abstract class ServerGamePacketListenerImplMixin {
     // Inject at the start (after ensuring running on same thread) to keep vanilla behavior: attack packet is sent first, punch packet after.
     @Inject(method = "handlePunch", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;resetLastActionTime()V"))
     private void punchPacket(final CallbackInfo ci) {
-        if (!Modules.ATTACK.isEnabled()) return;
+        final RootConfiguration config = Lagless.config();
+        if (!Modules.ATTACK.isEnabled(config)) return;
         final AttackModule.PunchState punchState = ((HasPunchState) this.player).getPunchState$lagless();
 
         switch (punchState) {
@@ -45,6 +48,17 @@ public abstract class ServerGamePacketListenerImplMixin {
 
         final Entity entity = Modules.ATTACK.rayTraceEntity(this.player);
         if (entity == null) return;
+
+        final boolean contain = config.modules.attack.entityTypes.entityTypes.contains(entity.getType());
+        switch (config.modules.attack.entityTypes.mode) {
+            case BLACKLIST -> {
+                if (contain) return;
+            }
+
+            case WHITELIST -> {
+                if (!contain) return;
+            }
+        }
 
         // Attack the entity
         this.handleAttack(new ServerboundAttackPacket(entity.getId()));

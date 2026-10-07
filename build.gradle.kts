@@ -9,6 +9,8 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+
+	gradlePluginPortal()
 }
 
 loom {
@@ -23,6 +25,11 @@ loom {
 	}
 }
 
+// Resolvable configuration that holds Configurate and its transitive dependencies
+val configurateConfiguration = configurations.create("configurate")
+
+configurations.implementation.get().extendsFrom(configurateConfiguration)
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft("com.mojang:minecraft:${providers.gradleProperty("minecraft_version").get()}")
@@ -31,7 +38,11 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
 
-	implementation("org.spongepowered:configurate-yaml:4.2.0")
+	configurateConfiguration("org.spongepowered:configurate-yaml:${providers.gradleProperty("configurate_version").get()}")
+	configurateConfiguration.resolvedConfiguration.resolvedArtifacts.forEach { artifact ->
+		val id = artifact.moduleVersion.id
+		include("${id.group}:${id.name}:${id.version}")
+	}
 }
 
 tasks.processResources {

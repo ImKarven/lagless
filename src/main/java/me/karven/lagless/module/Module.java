@@ -1,30 +1,22 @@
 package me.karven.lagless.module;
 
+import me.karven.lagless.Lagless;
+import me.karven.lagless.config.RootConfiguration;
 import org.jspecify.annotations.NullMarked;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @NullMarked
 public abstract class Module {
     private final String name;
-    private final AtomicBoolean ENABLED;
 
-    protected Module(final boolean enabled, final String name) {
-        this.ENABLED = new AtomicBoolean(enabled);
+    protected Module(final String name) {
         this.name = name;
     }
 
-    public void enable() {
-        this.ENABLED.set(true);
-    }
-
-    public void disable() {
-        this.ENABLED.set(false);
-    }
-
     public boolean isEnabled() {
-        return this.ENABLED.get();
+        return isEnabled(Lagless.config());
     }
+
+    abstract public boolean isEnabled(final RootConfiguration config);
 
     public String getName() {
         return this.name;
