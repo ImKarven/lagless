@@ -29,7 +29,7 @@ In such a competitive gamemode like Crystal PvP, this is a delay that can affect
 
 We can see that the player can only send the attack packet after the server sends the add entity packet because that's when the client actually knows the existence of the end crystal.
 
-Moreover, we can detect the player's left-clicks, every time the player presses the attack key, they send a `ServerboundPunchPacket` (there are edge cases, but this is just a simple explanation (*))
+Moreover, we can detect the player's left-clicks, every time the player presses the attack key, they send a `ServerboundPunchPacket`.
 
 From those information, we can **manually attack the crystal** using the player's left-clicks instead of attack packet.
 
@@ -37,16 +37,19 @@ When the player sends a punch packet, we ray trace in the direction the player i
 
 This basically means that before the player even knows the existence of the end crystal, they can hit it, right after placing the crystal down.
 
-This turns the sequence that previously took 400 ms to complete to only 200 ms, this 200 ms delay also only appears at the start of the sequence. If the player continues place-then-hit'ing end crystals, they will essentially end up doing it as fast as x = 0. (**)
+This turns the sequence that previously took 400 ms to complete to only 200 ms, this 200 ms delay also only appears at the start of the sequence. If the player continues place-then-hit'ing end crystals, they will essentially end up doing it as fast as x = 0.
 
-(**): it is important to note that this is not entirely true because the desync of the end crystals spawn and removal can prevent the client from placing end crystal on the same block. This also can be improved by checking for right-clicks and ray trace similarly, but it is not the scope of this module.
+However, it is important to note that this is not entirely true because the desync of the end crystals spawn and removal can prevent the client from placing end crystal on the same block. This also can be improved by checking for right-clicks and ray trace similarly, but it is not the scope of this module.
 
-## Packet order (*)
+## Packet order
 
-Punch at air sends a `ServerboundPunchPacket`
+When punching at air, the player sends a `ServerboundPunchPacket`. However, they also send this packet in some other cases.
 
 Start breaking block sends a `ServerboundPlayerActionPacket` followed by a `ServerboundPunchPacket`. `ServerboundPunchPacket`s are sent every tick until the player aborts breaking the block, or the block is broken.
+<br>
+If the block is destroyed in one tick, a `ServerboundPlayerActionPacket` is sent then one `ServerboundPunchPacket` is sent.
 
 Attacking an entity sends a `ServerboundAttackPacket` followed by a `ServerboundPunchPacket`
 
-(There might be more...)
+From these information, we should account for the module to not process the punch packet if the player previously sent an attack packet. This is because the player's left click attacked an entity already, meaning we should not attempt to attack the entity again. If the player destroys a block in one tick, we also ignore the punch packet. If the player does not destroy the block in one tick, we should ignore punch packets until they abort destroying the block or the block is broken.
+
