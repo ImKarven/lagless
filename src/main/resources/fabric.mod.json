@@ -27,10 +27,5 @@
 		"minecraft": "~26.3",
 		"java": ">=25",
 		"fabric-api": "*"
-	},
-	"custom": {
-		"loom:injected_interfaces": {
-			"net/minecraft/server/level/ServerPlayer": ["me/karven/lagless/module/attack/HasPunchState"]
-		}
 	}
 }
