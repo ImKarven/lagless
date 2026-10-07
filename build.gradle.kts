@@ -76,6 +76,10 @@ tasks.jar {
 	from("licenses/MIT") {
 		into("licenses")
 	}
+
+	from("assets/logo.png") {
+		into("assets/lagless")
+	}
 }
 
 // configure the maven publication
