@@ -13,4 +13,4 @@ Thus, Configurate jar files included in Lagless are licensed under Apache-2.0. L
 ## Assets
 Lagless art assets are copyrighted by Nguyễn Khánh Tùng (Karven) <karven@atomicmail.io>. All rights reserved.
 
-Lagless art assets include any file in the `assets/` directory and file `src/main/resources/assets/lagless/icon.png`.
+Lagless art assets include any file in the `assets/` directory.
