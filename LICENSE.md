@@ -11,6 +11,6 @@ Configurate is licensed under [the Apache license](./licenses/Apache-2.0).
 Thus, Configurate jar files included in Lagless are licensed under Apache-2.0. Lagless's code remains licensed under MIT.
 
 ## Assets
-Lagless art assets are copyrighted by Nguyễn Khánh Tùng (Karven) <karven@atomicmail.io>. All rights reserved.
+Lagless art assets are licensed under [CC BY-SA 4.0](./licenses/CC-BY-SA-4.0).
 
 Lagless art assets include any file in the `assets/` directory.
