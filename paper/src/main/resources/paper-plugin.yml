@@ -1,6 +1,7 @@
 name: Lagless
 description: $description
 version: '${version}'
+folia-supported: true
 
 main: me.karven.lagless.LaglessPaperPlugin
 api-version: '${api_version}'

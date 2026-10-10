@@ -36,11 +36,8 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	implementation(libs.fabricApi)
 
-	implementation(project(mapOf(
-		"path" to ":common",
-		"configuration" to "runtimeElements" // Because of paperweightUserdev
-	)))
-	include(project(":common"))
+	implementation(project(":common", "runtimeElements"))
+	include(project(":common", "runtimeElements"))
 
 	configurateConfiguration(libs.configurate.yaml)
 	configurateConfiguration.resolvedConfiguration.resolvedArtifacts.forEach { artifact ->

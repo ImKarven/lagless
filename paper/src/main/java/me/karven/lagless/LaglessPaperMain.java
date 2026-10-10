@@ -23,6 +23,10 @@ public class LaglessPaperMain extends BaseMain {
         return INSTANCE;
     }
 
+    public LaglessPaperPlugin plugin() {
+        return this.plugin;
+    }
+
     @Override
     void registerCommand() {
         plugin.getLifecycleManager().registerEventHandler(
