@@ -1,0 +1,9 @@
+name: Lagless
+description: $description
+version: '${version}'
+
+main: me.karven.lagless.LaglessPaperPlugin
+api-version: '${api_version}'
+load: POSTWORLD
+
+authors: [Karven]

@@ -6,6 +6,7 @@ pluginManagement {
 		}
 		mavenCentral()
 		gradlePluginPortal()
+		maven("https://repo.papermc.io/repository/maven-public/")
 	}
 
 	plugins {
@@ -15,3 +16,11 @@ pluginManagement {
 
 // Should match your modid
 rootProject.name = "lagless"
+
+listOf(
+	"common",
+	"fabric",
+	"paper"
+).forEach {
+	include(it)
+}

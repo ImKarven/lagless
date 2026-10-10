@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "lagless",
+	"version": "${version}",
+	"name": "Lagless",
+	"description": "${description}",
+	"authors": [
+		"Karven"
+	],
+	"contact": {
+		"email": "karven@atomicmail.io"
+	},
+	"license": "MIT",
+	"icon": "assets/lagless/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "me.karven.lagless.LaglessFabricMod"
+		]
+	},
+	"mixins": [
+		"lagless.mixins.json"
+	],
+	"accessWidener": "lagless.classtweaker",
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

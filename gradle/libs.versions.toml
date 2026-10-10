@@ -5,8 +5,16 @@ fabricLoader = "0.19.5"
 fabricApi = "0.161.0+26.3"
 configurate = "4.2.0"
 
+# plugins
+paperweightUserdev = "2.0.0-beta.24"
+runPaper = "3.1.0"
+
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 fabricLoader = { module = "net.fabricmc:fabric-loader", version.ref = "fabricLoader" }
 fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricApi" }
 configurate-yaml = { module = "org.spongepowered:configurate-yaml", version.ref = "configurate" }
+
+[plugins]
+paperweightUserdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweightUserdev" }
+runPaper = { id = "xyz.jpenilla.run-paper", version.ref = "runPaper" }
