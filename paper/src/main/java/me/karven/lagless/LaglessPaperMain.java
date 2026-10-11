@@ -2,6 +2,7 @@ package me.karven.lagless;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.karven.lagless.injector.InjectorEventListener;
+import me.karven.lagless.module.attack.AttackModuleEventListener;
 import org.bukkit.Bukkit;
 import org.jspecify.annotations.NullMarked;
 
@@ -31,5 +32,6 @@ public class LaglessPaperMain extends BaseMain {
 
     void registerListeners() {
         Bukkit.getPluginManager().registerEvents(new InjectorEventListener(), this.plugin);
+        Bukkit.getPluginManager().registerEvents(new AttackModuleEventListener(), this.plugin);
     }
 }
