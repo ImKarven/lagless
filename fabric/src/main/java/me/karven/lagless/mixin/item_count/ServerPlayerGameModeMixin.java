@@ -3,7 +3,7 @@ package me.karven.lagless.mixin.item_count;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import me.karven.lagless.mixin.accessor.AbstractContainerMenuAccessor;
-import me.karven.lagless.module.Modules;
+import me.karven.lagless.module.FabricModules;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerPlayerGameMode;
 import net.minecraft.world.InteractionHand;
@@ -47,7 +47,7 @@ public abstract class ServerPlayerGameModeMixin {
             final CallbackInfoReturnable<InteractionResult> cir,
             final @Share("snapshot") LocalRef<ItemStack> snapshot
     ) {
-        if (!Modules.ITEM_COUNT.isEnabled()) return;
+        if (!FabricModules.ITEM_COUNT.isEnabled()) return;
         final ItemStack untouchedItemStack = snapshot.get();
         if (untouchedItemStack == null || !(untouchedItemStack.getItem() instanceof BlockItem)) return;
         if (!cir.getReturnValue().consumesAction()) return;

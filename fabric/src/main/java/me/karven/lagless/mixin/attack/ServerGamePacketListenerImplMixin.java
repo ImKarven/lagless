@@ -2,8 +2,8 @@ package me.karven.lagless.mixin.attack;
 
 import me.karven.lagless.LaglessFabricMod;
 import me.karven.lagless.config.RootConfiguration;
-import me.karven.lagless.module.Modules;
-import me.karven.lagless.module.attack.AttackModule;
+import me.karven.lagless.module.FabricModules;
+import me.karven.lagless.module.attack.FabricAttackModule;
 import me.karven.lagless.module.attack.HasPunchState;
 import net.minecraft.network.protocol.game.ServerboundAttackPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,14 +27,14 @@ public abstract class ServerGamePacketListenerImplMixin {
     // Inject at the start (after ensuring running on same thread) to keep vanilla behavior: attack packet is sent first, punch packet after.
     @Inject(method = "handlePunch", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;resetLastActionTime()V"))
     private void punchPacket(final CallbackInfo ci) {
-        final RootConfiguration config = LaglessFabricMod.config();
-        if (!Modules.ATTACK.isEnabled(config)) return;
-        final AttackModule.PunchState punchState = ((HasPunchState) this.player).getPunchState$lagless();
+        final RootConfiguration config = LaglessFabricMod.instance().config();
+        if (!FabricModules.ATTACK.isEnabled(config)) return;
+        final FabricAttackModule.PunchState punchState = ((HasPunchState) this.player).getPunchState$lagless();
 
         switch (punchState) {
             case ATTACK, INSTANT_BREAK -> {
                 // We shouldn't attack if the player broke a block with one punch
-                ((HasPunchState) this.player).setPunchState$lagless(AttackModule.PunchState.NONE);
+                ((HasPunchState) this.player).setPunchState$lagless(FabricAttackModule.PunchState.NONE);
                 return;
             }
 
@@ -43,10 +43,10 @@ public abstract class ServerGamePacketListenerImplMixin {
                 return;
             }
 
-            case START_DESTROY_BLOCK -> ((HasPunchState) this.player).setPunchState$lagless(AttackModule.PunchState.DESTROYING_BLOCK);
+            case START_DESTROY_BLOCK -> ((HasPunchState) this.player).setPunchState$lagless(FabricAttackModule.PunchState.DESTROYING_BLOCK);
         }
 
-        final Entity entity = Modules.ATTACK.rayTraceEntity(this.player);
+        final Entity entity = FabricModules.ATTACK.rayTraceEntity(this.player);
         if (entity == null) return;
 
         final boolean contain = config.modules.attack.entityTypes.entityTypes.contains(entity.getType());
@@ -66,6 +66,6 @@ public abstract class ServerGamePacketListenerImplMixin {
 
     @Inject(method = "handleAttack", at = @At(value = "HEAD"))
     private void attackPacket(final ServerboundAttackPacket packet, final CallbackInfo ci) {
-        ((HasPunchState) this.player).setPunchState$lagless(AttackModule.PunchState.ATTACK);
+        ((HasPunchState) this.player).setPunchState$lagless(FabricAttackModule.PunchState.ATTACK);
     }
 }

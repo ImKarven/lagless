@@ -1,6 +1,6 @@
 package me.karven.lagless.mixin.pose;
 
-import me.karven.lagless.module.Modules;
+import me.karven.lagless.module.FabricModules;
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ChunkMap;
@@ -32,7 +32,7 @@ public class ChunkMap$TrackedEntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;send(Lnet/minecraft/network/protocol/Packet;)V")
     )
     private void removePoseBeforeSendingEntityDataToSelf(final Args arguments) {
-        if (!Modules.POSE.isEnabled()) return;
+        if (!FabricModules.POSE.isEnabled()) return;
 
         if (!(arguments.get(0) instanceof ClientboundSetEntityDataPacket(int id, List<SynchedEntityData.DataValue<?>> packedItems))) return;
         if (!(this.entity instanceof ServerPlayer player)) return;

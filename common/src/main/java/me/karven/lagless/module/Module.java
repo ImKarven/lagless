@@ -1,6 +1,6 @@
 package me.karven.lagless.module;
 
-import me.karven.lagless.LaglessFabricMod;
+import me.karven.lagless.BaseMain;
 import me.karven.lagless.config.RootConfiguration;
 import org.jspecify.annotations.NullMarked;
 
@@ -13,7 +13,7 @@ public abstract class Module {
     }
 
     public boolean isEnabled() {
-        return isEnabled(LaglessFabricMod.config());
+        return isEnabled(BaseMain.instance().config());
     }
 
     abstract public boolean isEnabled(final RootConfiguration config);

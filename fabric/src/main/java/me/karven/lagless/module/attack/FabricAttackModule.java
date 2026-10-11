@@ -1,7 +1,6 @@
 package me.karven.lagless.module.attack;
 
-import me.karven.lagless.config.RootConfiguration;
-import me.karven.lagless.module.Module;
+import me.karven.lagless.module.AttackModule;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -12,10 +11,7 @@ import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 @NullMarked
-public class AttackModule extends Module {
-    public AttackModule() {
-        super("attack");
-    }
+public class FabricAttackModule extends AttackModule {
 
     public @Nullable Entity rayTraceEntity(final ServerPlayer player) {
         if (player.gameMode() == GameType.SPECTATOR) return null;
@@ -53,11 +49,6 @@ public class AttackModule extends Module {
         );
 
         return entityHitResult == null ? null : entityHitResult.getEntity();
-    }
-
-    @Override
-    public boolean isEnabled(final RootConfiguration config) {
-        return config.modules.attack.enabled;
     }
 
     public enum PunchState {

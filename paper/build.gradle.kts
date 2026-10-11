@@ -2,6 +2,7 @@ plugins {
     id("java-library")
     alias(libs.plugins.paperweightUserdev)
     alias(libs.plugins.runPaper)
+    alias(libs.plugins.shadow)
 }
 
 dependencies {
@@ -28,6 +29,12 @@ tasks {
         filesMatching("paper-plugin.yml") {
             expand(props)
         }
+    }
+
+    shadowJar {
+        archiveClassifier.set("")
+
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
 }
 
