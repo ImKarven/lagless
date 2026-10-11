@@ -17,6 +17,9 @@ Lagless uses Gradle as its build system.
 
 You can get a working Fabric mod jar file by building the mod from source, following the steps below.
 
+> [!NOTE]
+> Outdated. Needs specific steps for both Paper and Fabric
+
 ### Requirements
 - Java 25
 - Git
