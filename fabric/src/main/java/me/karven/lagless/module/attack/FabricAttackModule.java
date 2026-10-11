@@ -44,7 +44,10 @@ public class FabricAttackModule extends AttackModule {
                 startPosition,
                 entityRayTraceEndPosition,
                 searchBox,
-                entity -> entity.isPickable() && !entity.isSpectator(),
+                entity -> entity != player &&
+                        entity.isPickable() &&
+                        !entity.isSpectator() &&
+                        !entity.isPassengerOfSameVehicle(player),
                 maxDistance * maxDistance
         );
 
