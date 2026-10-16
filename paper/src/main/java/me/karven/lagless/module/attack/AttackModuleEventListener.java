@@ -1,5 +1,6 @@
 package me.karven.lagless.module.attack;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.event.player.PlayerArmSwingEvent;
 import io.papermc.paper.event.player.PrePlayerAttackEntityEvent;
 import me.karven.lagless.LaglessPaperMain;
@@ -8,10 +9,7 @@ import me.karven.lagless.module.AttackModule;
 import me.karven.lagless.module.PaperModules;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
-import org.bukkit.FluidCollisionMode;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.craftbukkit.entity.CraftEntity;
@@ -54,6 +52,16 @@ public class AttackModuleEventListener implements Listener {
 
             case START_DESTROY_BLOCK -> PaperModules.ATTACK.setPunchState(player, AttackModule.PunchState.DESTROYING_BLOCK);
         }
+        if (player.getGameMode() == GameMode.SPECTATOR || !((CraftPlayer) player).getHandle().connection.hasClientLoaded()) {
+            return;
+        }
+
+        if (player.getInventory().getItemInMainHand().hasData(DataComponentTypes.PIERCING_WEAPON)) {
+            return;
+        }
+
+        // TODO: Handle cannotAttackWithItem and isItemEnabled?
+
         final AttributeInstance interactionRangeAttribute = player.getAttribute(Attribute.ENTITY_INTERACTION_RANGE);
         if (interactionRangeAttribute == null) return;
         final double range = interactionRangeAttribute.getValue();
@@ -77,6 +85,10 @@ public class AttackModuleEventListener implements Listener {
         if (rayTraceResult == null) return;
         final Entity entity = rayTraceResult.getHitEntity();
         if (entity == null) return;
+
+        final WorldBorder border = player.getWorldBorder() == null ? player.getWorld().getWorldBorder() : player.getWorldBorder();
+        if (!border.isInside(entity.getLocation().toBlockLocation())) return;
+
         final NamespacedKey key = entity.getType().getKey();
         final net.minecraft.world.entity.EntityType<?> nmsEntityType =
                 BuiltInRegistries.ENTITY_TYPE.getValue(Identifier.fromNamespaceAndPath(key.namespace(), key.value()));
