@@ -21,9 +21,6 @@ public abstract class ServerGamePacketListenerImplMixin {
     @Shadow
     public ServerPlayer player;
 
-    @Shadow
-    public abstract void handleAttack(ServerboundAttackPacket packet);
-
     // Inject at the start (after ensuring running on same thread) to keep vanilla behavior: attack packet is sent first, punch packet after.
     @Inject(method = "handlePunch", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;resetLastActionTime()V"))
     private void punchPacket(final CallbackInfo ci) {
@@ -61,7 +58,7 @@ public abstract class ServerGamePacketListenerImplMixin {
         }
 
         // Attack the entity
-        this.handleAttack(new ServerboundAttackPacket(entity.getId()));
+        this.player.attack(entity);
     }
 
     @Inject(method = "handleAttack", at = @At(value = "HEAD"))

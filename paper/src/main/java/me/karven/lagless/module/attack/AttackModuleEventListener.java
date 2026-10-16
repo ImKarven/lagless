@@ -92,6 +92,7 @@ public class AttackModuleEventListener implements Listener {
             }
         }
 
+        PaperModules.ATTACK.setLaglessAttacking(player);
         player.attack(entity);
     }
 
@@ -113,7 +114,12 @@ public class AttackModuleEventListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onAttack(final PrePlayerAttackEntityEvent event) {
-        PaperModules.ATTACK.setPunchState(event.getPlayer(), AttackModule.PunchState.ATTACK);
+        final Player player = event.getPlayer();
+        if (PaperModules.ATTACK.isLaglessAttacking(player)) {
+            PaperModules.ATTACK.unsetLaglessAttacking(player);
+            return;
+        }
+        PaperModules.ATTACK.setPunchState(player, AttackModule.PunchState.ATTACK);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -124,6 +130,6 @@ public class AttackModuleEventListener implements Listener {
 
     @EventHandler
     public void onJoin(final PlayerJoinEvent event) {
-        PaperModules.ATTACK.resetPunchState(event.getPlayer());
+        PaperModules.ATTACK.resetNonPersistentData(event.getPlayer());
     }
 }
