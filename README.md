@@ -11,8 +11,7 @@ Currently, Lagless can be installed as a mod for Fabric servers. Plugin versions
 
 ## Showcase
 
-Uploading Lagless Showcase v0.0.1.mp4…
-
+https://github.com/user-attachments/assets/5d6a1430-aa2f-4a5e-a7ef-a699082322e4
 
 ## Supported Versions
 Lagless is designed to upstream with the latest version of the game. This means that when a new Minecraft version releases, older versions will get deprecated. This makes development much easier to deal with. Lagless still leaves a margin of time for supporting the outdated version when a new Minecraft version releases, this gives time for everyone to update to the new Minecraft version before Lagless completely ends its support for the outdated version.
